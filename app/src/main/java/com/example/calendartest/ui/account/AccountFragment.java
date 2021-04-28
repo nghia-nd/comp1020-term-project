@@ -1,9 +1,11 @@
 package com.example.calendartest.ui.account;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,21 +15,26 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.calendartest.R;
+import com.example.calendartest.ui.auth.SignupActivity;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class AccountFragment extends Fragment {
-
+    Button logout;
     private AccountViewModel accountViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         accountViewModel =
                 new ViewModelProvider(this).get(AccountViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_notifications, container, false);
-        final TextView textView = root.findViewById(R.id.text_notifications);
-        accountViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        View root = inflater.inflate(R.layout.fragment_account, container, false);
+        logout = root.findViewById(R.id.buttonlogout);
+        logout.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(getContext(), SignupActivity.class);
+                startActivity(intent);
+                getActivity().finish();
             }
         });
         return root;

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.account.AccountFragment">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:background="#00F4F4F4"
+        app:tint="#E91E63"
+        tools:srcCompat="@drawable/ic_account_24dp" />
+
+    <RelativeLayout
+        android:id='@+id/profile'
+        android:layout_width="300dp"
+        android:layout_height="200dp"
+        android:layout_below="@+id/imageView"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true">
+
+
+        <TextView
+            android:id="@+id/firstname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text= "FirstName: Khoi"
+            />
+
+        <TextView
+            android:id="@+id/lastname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/firstname"
+            android:layout_marginTop="10dp"
+            android:text= "LastName: Nguyen"
+            />
+
+        <TextView
+            android:id="@+id/email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lastname"
+            android:layout_marginTop="10dp"
+            android:text= "Email: nguyentietnguyenkhoi@gmail.com"
+            />
+
+    </RelativeLayout>
+
+    <Button
+        android:id='@+id/buttonlogout'
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below='@+id/profile'
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:text="Log out"
+        />
+</RelativeLayout>
