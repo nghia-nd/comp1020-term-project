@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "463608727624",
+    "firebase_url": "https://calendly-ba934-default-rtdb.firebaseio.com",
+    "project_id": "calendly-ba934",
+    "storage_bucket": "calendly-ba934.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:463608727624:android:4b4242fa8561b37178707d",
+        "android_client_info": {
+          "package_name": "com.example.calendartest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "463608727624-n82ije2lr5ivf3bdvs83q6k35afta9tp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNIX44ZL7uj-NaV7_7YuJvPZKQxEpk0yQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "463608727624-n82ije2lr5ivf3bdvs83q6k35afta9tp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:463608727624:android:007aebebeb5fd40b78707d",
+        "android_client_info": {
+          "package_name": "com.example.calendly"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "463608727624-n82ije2lr5ivf3bdvs83q6k35afta9tp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNIX44ZL7uj-NaV7_7YuJvPZKQxEpk0yQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "463608727624-n82ije2lr5ivf3bdvs83q6k35afta9tp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
