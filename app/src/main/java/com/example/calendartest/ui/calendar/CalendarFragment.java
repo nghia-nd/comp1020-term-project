@@ -98,6 +98,9 @@ public class CalendarFragment extends Fragment {
          */
         // minimum and maximum date of our calendar
         // 2 month behind, one year ahead, example: March 2015 <-> May 2015 <-> May 2016
+
+
+
         mAgendaCalendarView = (AgendaCalendarView) root.findViewById(R.id.calender);
         Calendar minDate = Calendar.getInstance();
         Calendar maxDate = Calendar.getInstance();
@@ -107,9 +110,10 @@ public class CalendarFragment extends Fragment {
         maxDate.add(Calendar.YEAR, 1);
 
         List<CalendarEvent> eventList = new ArrayList<>();
-        mockList(eventList);
+        //mockList(eventList);
 
         mAgendaCalendarView.init(eventList, minDate, maxDate, Locale.getDefault(), new CalendarPicker());
+
         return root;
     }
 
@@ -128,6 +132,7 @@ public class CalendarFragment extends Fragment {
         BaseCalendarEvent event2 = new BaseCalendarEvent("Visit to Dalvík", "A beautiful small town", "Dalvík",
                 ContextCompat.getColor(this.getContext(), R.color.yellow), startTime2, endTime2, true);
         eventList.add(event2);
+
         /*
         // Example on how to provide your own layout
         Calendar startTime3 = Calendar.getInstance();

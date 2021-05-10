@@ -8,7 +8,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.calendar.CalendarFragment">
 
-
     <com.github.tibolte.agendacalendarview.AgendaCalendarView
         android:id="@+id/calender"
         android:layout_width="match_parent"
