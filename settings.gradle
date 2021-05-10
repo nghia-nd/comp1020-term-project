@@ -1,2 +1,3 @@
+include ':agendacalendarview'
 include ':app'
 rootProject.name = "calendarTest"
