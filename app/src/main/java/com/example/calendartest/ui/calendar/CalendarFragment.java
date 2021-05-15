@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -98,8 +99,7 @@ public class CalendarFragment extends Fragment {
          */
         // minimum and maximum date of our calendar
         // 2 month behind, one year ahead, example: March 2015 <-> May 2015 <-> May 2016
-
-
+        ProgressBar progressBar = root.findViewById(R.id.progress_bar1);
 
         mAgendaCalendarView = (AgendaCalendarView) root.findViewById(R.id.calender);
         Calendar minDate = Calendar.getInstance();
@@ -113,6 +113,8 @@ public class CalendarFragment extends Fragment {
         //mockList(eventList);
 
         mAgendaCalendarView.init(eventList, minDate, maxDate, Locale.getDefault(), new CalendarPicker());
+
+        progressBar.setVisibility(View.INVISIBLE);
 
         return root;
     }
