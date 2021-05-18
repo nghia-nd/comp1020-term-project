@@ -110,7 +110,7 @@ public class CalendarFragment extends Fragment {
         maxDate.add(Calendar.YEAR, 1);
 
         List<CalendarEvent> eventList = new ArrayList<>();
-        //mockList(eventList);
+        mockList(eventList);
 
         mAgendaCalendarView.init(eventList, minDate, maxDate, Locale.getDefault(), new CalendarPicker());
 
