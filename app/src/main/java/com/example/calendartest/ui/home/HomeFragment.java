@@ -43,16 +43,9 @@ public class HomeFragment extends Fragment {
 
     private List<Card> getMeeting() {
         List<Card> meetingList = new ArrayList<Card>();
-        meetingList.add(new Card("first meeting", "07:20", "https://google.com"));
-        meetingList.add(new Card("second meeting", "08:20","vinuni-edu-vn.zoom.us/j/93195709386?pwd=R1pRK1l2UE1zRjRwL1NBTnJYdHZUQT09"));
-        meetingList.add(new Card("first meeting", "07:20", "google.com"));
-        meetingList.add(new Card("second meeting", "08:20","facebook.com"));
-        meetingList.add(new Card("first meeting", "07:20", "google.com"));
-        meetingList.add(new Card("second meeting", "08:20","facebook.com"));
-        meetingList.add(new Card("first meeting", "07:20", "google.com"));
-        meetingList.add(new Card("second meeting", "08:20","facebook.com"));
-        meetingList.add(new Card("first meeting", "07:20", "google.com"));
-        meetingList.add(new Card("second meeting", "08:20","facebook.com"));
+        meetingList.add(new Card("first meeting", "20/10","07:20", "Khoi, Nghia", "https://google.com"));
+        meetingList.add(new Card("second meeting", "08:20", "20/10", "Khoi, Nghia","vinuni-edu-vn.zoom.us/j/93195709386?pwd=R1pRK1l2UE1zRjRwL1NBTnJYdHZUQT09"));
+
         return meetingList;
     }
 }
