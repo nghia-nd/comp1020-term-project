@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="event_start_time" type="id" />
+    <item name="event_end_time" type="id" />
+    <item name="participants_emails" type="id" />
+    <item name="event_name" type="id" />
+    <item name="event_color" type="id" />
+    <item name="event_priority" type="id" />
+    <item name="event_openJio_status" type="id" />
+    <item name="seeWhoComing_openJio_popupMenu" type="id" />
+    <item name="removeJio_openJio_popupMenu" type="id" />
+
+</resources>

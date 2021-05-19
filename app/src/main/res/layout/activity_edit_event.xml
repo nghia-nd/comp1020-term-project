@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".EditEventActivity">
+
+
+    <EditText
+        android:id="@+id/edit_event_eventName_editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Event Name"
+        android:inputType="textMultiLine"/>
+
+    <Button
+        android:id="@+id/edit_event_startTime_button"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edit_event_eventName_editText"
+        android:text="Start time"/>
+
+    <TextView
+        android:id="@+id/edit_event_startTime_textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/edit_event_eventName_editText"
+        android:layout_toEndOf="@+id/edit_event_startTime_button"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+    <Button
+        android:id="@+id/edit_event_endTime_button"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edit_event_startTime_button"
+        android:text="End time"/>
+
+    <TextView
+        android:id="@+id/edit_event_endTime_textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/edit_event_startTime_button"
+        android:layout_toEndOf="@+id/edit_event_endTime_button"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+    <TextView
+        android:id="@+id/edit_event_setPriority_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Set priority:"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/edit_event_endTime_button"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+
+    <Spinner
+        android:id="@+id/edit_event_prioritySpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edit_event_setPriority_textView"/>
+
+    <Button
+        android:id="@+id/edit_event_deleteEvent_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edit_event_endTime_button"
+        android:layout_alignParentRight="true"
+        android:text="@string/delete_event"
+        android:padding="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_gravity="right"
+        android:background="@color/redDelete"/>
+</RelativeLayout>
