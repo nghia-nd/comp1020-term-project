@@ -19,6 +19,7 @@ import com.example.calendartest.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -54,6 +55,7 @@ public class SignupActivity extends AppCompatActivity {
         progressbar = findViewById(R.id.bar);
 
         //Firebase:
+        FirebaseApp.initializeApp(this);
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
 
