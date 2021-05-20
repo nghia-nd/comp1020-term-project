@@ -1,6 +1,7 @@
 package com.github.tibolte.agendacalendarview.models;
 
 import java.util.Calendar;
+import java.util.LinkedList;
 
 public interface CalendarEvent {
 
@@ -42,4 +43,8 @@ public interface CalendarEvent {
     void setWeekReference(IWeekItem mWeekReference);
 
     CalendarEvent copy();
+
+    void setParticipants(LinkedList<String> participants);
+
+    LinkedList<String> getParticipants();
 }

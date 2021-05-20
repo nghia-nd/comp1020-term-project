@@ -15,7 +15,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.calendartest.R;
 
+import java.util.LinkedList;
 import java.util.List;
+
+import io.perfmark.Link;
 
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder>{
     private Context mContext;
@@ -62,10 +65,17 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
             return;
         }
         holder.viewTitle.setText(card.getTitle().toUpperCase());
-        holder.viewDay.setText("On: " + card.getDay());
-        holder.viewStartTime.setText("At: " + card.getStartTime());
+        holder.viewDate.setText("Time: " + card.getDate());
         holder.viewUrl.setText("Address: " + card.getUrlOrLocation());
-        holder.viewParticipants.setText("Participant(s): " + card.getParticipants());
+        LinkedList<String> participants = new LinkedList<String>(card.getParticipants());
+        String strParticipants = "";
+        int i;
+        for (i = 0; i < participants.size() - 1; i++) {
+            strParticipants += participants.poll() + ", ";
+        }
+        strParticipants += participants.poll();
+
+        holder.viewParticipants.setText("Participant(s): " + strParticipants);
         holder.setItemClickListener(new ItemClickListener() {
             @Override
             public void onClick(View view, int position, boolean isLongClick) {
@@ -95,8 +105,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
     public class CardViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView viewTitle;
-        private TextView viewDay;
-        private TextView viewStartTime;
+        private TextView viewDate;
         private TextView viewUrl;
         private TextView viewParticipants;
         private com.google.android.material.button.MaterialButton viewButton;
@@ -106,8 +115,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         public CardViewHolder(@NonNull View itemView) {
             super(itemView);
             viewTitle = itemView.findViewById(R.id.text_title);
-            viewDay = itemView.findViewById(R.id.text_day);
-            viewStartTime = itemView.findViewById(R.id.text_timeStart);
+            viewDate = itemView.findViewById(R.id.text_date);
             viewParticipants = itemView.findViewById(R.id.text_participant);
             viewUrl = itemView.findViewById(R.id.text_url);
             viewButton = itemView.findViewById(R.id.text_button);

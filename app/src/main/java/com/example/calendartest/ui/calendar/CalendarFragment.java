@@ -13,19 +13,25 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.calendartest.Event;
 import com.example.calendartest.R;
 import com.github.tibolte.agendacalendarview.AgendaCalendarView;
 import com.github.tibolte.agendacalendarview.CalendarPickerController;
 import com.github.tibolte.agendacalendarview.models.BaseCalendarEvent;
 import com.github.tibolte.agendacalendarview.models.CalendarEvent;
 import com.github.tibolte.agendacalendarview.models.IDayItem;
+import com.github.tibolte.agendacalendarview.models.IWeekItem;
 
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+
+import io.perfmark.Link;
 
 
 public class CalendarFragment extends Fragment {
@@ -67,29 +73,40 @@ public class CalendarFragment extends Fragment {
         return root;
     }
 
-    private void fillList(List<CalendarEvent> eventList) {
-        Calendar startTime1 = Calendar.getInstance();
-        Calendar endTime1 = Calendar.getInstance();
-        endTime1.add(Calendar.MONTH, 1);
-        BaseCalendarEvent event1 = new BaseCalendarEvent("Thibault travels in Iceland", "A wonderful journey!", "Iceland",
-                ContextCompat.getColor(this.getContext(), R.color.orange_dark), startTime1, endTime1, true);
-        eventList.add(event1);
+    private Calendar fillCalendar(int year, int month, int day, int hour, int min) {
+        Calendar mCalendar = Calendar.getInstance();
+        mCalendar.set(Calendar.YEAR, year);
+        mCalendar.set(Calendar.MONTH, month - 1);
+        mCalendar.set(Calendar.DAY_OF_MONTH, day);
+        mCalendar.set(Calendar.HOUR_OF_DAY, hour);
+        mCalendar.set(Calendar.MINUTE, min);
 
+        return mCalendar;
+    }
+
+    private void fillList(List<CalendarEvent> eventList) {
         Calendar startTime2 = Calendar.getInstance();
-        startTime2.add(Calendar.DAY_OF_YEAR, 1);
+        startTime2.add(Calendar.DAY_OF_YEAR, 0);
         Calendar endTime2 = Calendar.getInstance();
-        endTime2.add(Calendar.DAY_OF_YEAR, 3);
+        endTime2.add(Calendar.DAY_OF_YEAR, 4);
         BaseCalendarEvent event2 = new BaseCalendarEvent("Visit to Dalvík", "A beautiful small town", "Dalvík",
-                ContextCompat.getColor(this.getContext(), R.color.yellow), startTime2, endTime2, true);
+                ContextCompat.getColor(this.getContext(), R.color.orange_dark), startTime2, endTime2, false, new LinkedList<String>());
         eventList.add(event2);
+
+        Calendar startTime1 = fillCalendar(2021, 5, 20, 15,30);
+        Calendar endTime1 = fillCalendar(2021, 5, 20, 15, 50);
+        BaseCalendarEvent event1 = new BaseCalendarEvent("Deadlines", "A beautiful deadline", "Dalvík",
+                ContextCompat.getColor(this.getContext(), R.color.blue_selected), startTime1, endTime1, true, new LinkedList<String>());
+        eventList.add(event1);
 
     }
 
     public class CalendarPicker implements CalendarPickerController {
 
         IDayItem mDayItem;
-        CalendarEvent mEvent;
+        CalendarEvent mCalendarEvent;
         Calendar mCalendar;
+        Event mEvent;
         @Override
         public void onDaySelected(IDayItem dayItem) {
             mDayItem = dayItem;
@@ -97,8 +114,14 @@ public class CalendarFragment extends Fragment {
 
         @Override
         public void onEventSelected(CalendarEvent event) {
-            mEvent = event;
-            Toast.makeText(getContext(), event.getTitle() + " clicked", Toast.LENGTH_SHORT).show();
+            mCalendarEvent = event;
+            String title = event.getTitle();
+            String location = event.getLocation();
+            LinkedList<String> participants = event.getParticipants();
+            Date date = event.getDayReference().getDate();
+            int month = date.getMonth();
+            int day = date.getDate();
+            Toast.makeText(getContext(), event.getTitle() + " clicked " + day + "/" + month, Toast.LENGTH_SHORT).show();
         }
 
         @Override
