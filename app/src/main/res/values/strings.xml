@@ -1,6 +1,10 @@
 <resources>
-    <string name="app_name">calendarTest</string>
-    <string name="title_home">Home</string>
-    <string name="title_calendar">Calendar</string>
-    <string name="title_notifications">Account</string>
+    <string name="app_name" translatable="false">calendarTest</string>
+    <string name="title_home" translatable="false">Home</string>
+    <string name="title_calendar" translatable="false">Calendar</string>
+    <string name="title_notifications" translatable="false">Account</string>
+    <string name="edit_event" translatable="false">Edit Event</string>
+    <string name="new_event" translatable="false" />
+    <string name="delete_event" translatable="false" />
+
 </resources>

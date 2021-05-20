@@ -46,4 +46,5 @@ dependencies {
     // other libraries
     implementation 'se.emilsjolander:stickylistheaders:2.7.0'
     implementation 'io.reactivex:rxjava:1.1.1'
+    implementation 'net.codecrafted:lineartimepicker:1.0.0'
 }

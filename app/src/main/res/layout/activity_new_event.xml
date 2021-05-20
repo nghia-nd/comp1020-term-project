@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".NewEventActivityForHost">
+
+
+    <EditText
+        android:id="@+id/new_event_eventName_editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:hint="Event Name"
+        android:inputType="textMultiLine" />
+
+    <EditText
+        android:id="@+id/new_event_Participant_email_editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/new_event_eventName_editText"
+        android:layout_marginTop="49dp"
+        android:hint="Participants' emails"
+        android:inputType="textMultiLine" />
+
+    <EditText
+        android:id="@+id/new_event_eventLink_editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/new_event_eventName_editText"
+        android:layout_marginTop="140dp"
+        android:hint="Event address"
+        android:inputType="textMultiLine" />
+
+    <Button
+        android:id="@+id/new_event_startTime_button"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/new_event_eventName_editText"
+        android:layout_marginTop="236dp"
+        android:text="Start time" />
+
+    <TextView
+        android:id="@+id/new_event_startTime_textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/new_event_eventName_editText"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="243dp"
+        android:layout_toEndOf="@+id/new_event_startTime_button"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+    <Button
+        android:id="@+id/new_event_endTime_button"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/new_event_startTime_button"
+        android:layout_marginTop="19dp"
+        android:text="End time" />
+
+    <TextView
+        android:id="@+id/new_event_endTime_textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/new_event_startTime_button"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="25dp"
+        android:layout_toEndOf="@+id/new_event_endTime_button"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+</RelativeLayout>

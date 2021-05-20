@@ -10,6 +10,18 @@
     <color name="orange_dark">#FF5722</color>
     <color name="yellow">#FFEB3B</color>
 
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="selected_day_green">#33d993</color>
+    <color name="lightgreen">#00cf78</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="mti_default_primary">#01b37c</color>
+
+    <color name="mti_default_primary_dark">#09865f</color>
+    <color name="colorWhite">#ffffff</color>
+    <color name="colorBlack">#000000</color>
+    <color name="redDelete" >#d11a2a</color>
+
     <!-- Colors for Calendar view -->
     <color name="calendar_future_days_bg">#FFFFFF</color>
     <color name="calendar_past_days_bg">#F5F5F5</color>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginTop="8dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/event_start_time"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:padding="8dp"
+            android:text="09:00 am"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"/>
+
+        <TextView
+            android:id="@+id/event_end_time"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:padding="8dp"
+            android:text="10:00 am"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/event_start_time"/>
+
+        <TextView
+            android:id="@+id/event_color"
+            android:layout_width="8dp"
+            android:layout_height="80dp"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@+id/event_start_time" />
+
+        <TextView
+            android:id="@+id/event_name"
+            android:layout_width="190dp"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:layout_toRightOf="@+id/event_start_time"
+            android:text="event title"
+            android:maxLines="2"
+            android:ellipsize="end"/>
+
+        <TextView
+            android:id="@+id/event_priority"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="16dp"/>
+
+        <TextView
+            android:id="@+id/event_openJio_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/event_priority"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="16dp"/>
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>
