@@ -176,7 +176,7 @@ public class NewEventActivityForHost extends AppCompatActivity {
         Intent intent = getIntent();
 
         // Add event to Firebase
-        EventAdder eventAdder = new EventAdder();
+        //EventAdder eventAdder = new EventAdder();
         EventAdder.addToFirebase(currentUser, eventName, participantEmail_str, eventLink, startTime, endTime);
         EventAdder.refreshAllFragment(getParent());
         /**New event object**/

@@ -102,7 +102,6 @@ public class CalendarFragment extends Fragment {
                 .document(userID).collection("event");
 
 
-
         Calendar startTime1 = fillCalendar(2021, 5, 20, 15,30);
         Calendar endTime1 = fillCalendar(2021, 5, 20, 15, 50);
 
