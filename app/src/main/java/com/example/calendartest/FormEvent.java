@@ -1,40 +1,51 @@
 package com.example.calendartest;
 
-public class Event {
+import java.util.Calendar;
+import java.util.Date;
+
+public class FormEvent {
     private String eventName;
     private String participantEmail;
     private String eventLink;
     private String startTime;
     private String endTime;
-    private int year;
-    private int month;
-    private int day;
-    private int priority;
+    int year;
+    int month;
+    int day;
 
     private String userId;
     private String displayName;
 
-    public Event() {
+    public FormEvent() {
         //empty constructor needed
     }
 
-    public Event(String eventName, String participantEmail, String eventLink, String startTime, String endTime, String userId, String displayName) {
+    public FormEvent(String eventName, String participantEmail, String eventLink, int year, int month, int day, String startTime, String endTime, String userId, String displayName) {
         this.eventName = eventName;
         this.participantEmail = participantEmail;
         this.eventLink = eventLink;
+        this.year = year;
+        this.month = month;
+        this.day = day;
         this.startTime = startTime;
         this.endTime = endTime;
         this.userId = userId;
         this.displayName = displayName;
-        //this.priority = 1;
+    }
+    public String getParticipantEmail() {
+        return participantEmail;
     }
 
-    public int getPriority() {
-        return priority;
+    public void setParticipantEmail(String participantEmail) {
+        this.participantEmail = participantEmail;
     }
 
-    public void setPriority(int priority) {
-        this.priority = priority;
+    public String getEventLink() {
+        return eventLink;
+    }
+
+    public void setEventLink(String eventLink) {
+        this.eventLink = eventLink;
     }
 
     public String getEventName() {

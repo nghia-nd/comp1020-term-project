@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -15,12 +14,11 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.github.tibolte.agendacalendarview.models.CalendarEvent;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
-
-import java.text.DateFormat;
-import java.util.Calendar;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
     // Define the variable of CalendarView type
@@ -45,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //Toast.makeText(MainActivity.this, "Add button clicked", Toast.LENGTH_SHORT).show();
                 //showSnackbar();
-                Intent intent = new Intent(MainActivity.this, NewEventActivityForHost.class);
+                Intent intent = new Intent(MainActivity.this, NewEventActivity.class);
                 startActivity(intent);
 
             }
@@ -62,6 +60,11 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+
+
+        for (CalendarEvent i : EventManager.pullFirebaseData(this, FirebaseAuth.getInstance())) {
+            EventManager.add(i);
+        }
     }
 
     private void showSnackbar(){

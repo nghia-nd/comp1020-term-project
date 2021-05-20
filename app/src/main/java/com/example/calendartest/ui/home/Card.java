@@ -2,25 +2,26 @@ package com.example.calendartest.ui.home;
 
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.List;
 
 public class Card {
     private String title;
     private Date date;
-    private LinkedList<String> participants;
+    private List<String> participants;
     private String urlOrLocation;
 
-    public Card(String title, Date date, LinkedList<String> participants, String urlOrLocation) {
+    public Card(String title, Date date, List<String> participants, String urlOrLocation) {
         this.title = title;
         this.date =date;
         this.participants = participants;
         this.urlOrLocation = urlOrLocation;
     }
 
-    public LinkedList<String> getParticipants() {
+    public List<String> getParticipants() {
         return participants;
     }
 
-    public void setParticipants(LinkedList<String> participants) {
+    public void setParticipants(List<String> participants) {
         this.participants = participants;
     }
 

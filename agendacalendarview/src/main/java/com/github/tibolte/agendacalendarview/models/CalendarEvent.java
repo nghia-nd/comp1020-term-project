@@ -1,7 +1,9 @@
 package com.github.tibolte.agendacalendarview.models;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.LinkedList;
+import java.util.List;
 
 public interface CalendarEvent {
 
@@ -44,7 +46,7 @@ public interface CalendarEvent {
 
     CalendarEvent copy();
 
-    void setParticipants(LinkedList<String> participants);
+    void setParticipants(List<String> participants);
 
-    LinkedList<String> getParticipants();
+    List<String> getParticipants();
 }

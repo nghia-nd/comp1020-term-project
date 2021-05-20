@@ -4,43 +4,29 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.text.InputType;
-import androidx.annotation.NonNull;
+
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.github.tibolte.agendacalendarview.models.BaseCalendarEvent;
+import com.github.tibolte.agendacalendarview.models.CalendarEvent;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import android.app.DatePickerDialog;
-import android.widget.DatePicker;
-import java.text.DateFormat;
+
 import java.util.Calendar;
 import net.steamcrafted.lineartimepicker.dialog.LinearTimePickerDialog;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
-
-public class NewEventActivityForHost extends AppCompatActivity {
+public class NewEventActivity extends AppCompatActivity {
     private EditText new_event_eventName;
     private EditText new_event_participantEmail;
     private EditText new_event_eventLink;
@@ -59,6 +45,9 @@ public class NewEventActivityForHost extends AppCompatActivity {
     Button btnGet;
     TextView tvw;
 
+    private int event_year;
+    private int event_month;
+    private int event_day;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +66,9 @@ public class NewEventActivityForHost extends AppCompatActivity {
         select_startTime = findViewById(R.id.new_event_startTime_button);
         select_endTime = findViewById(R.id.new_event_endTime_button);
 
+        tvw= findViewById(R.id.textView1);
+        eText= findViewById(R.id.editText1);
+        eText.setInputType(InputType.TYPE_NULL);
 
         dialogStartTime = LinearTimePickerDialog.Builder.with(this)
                 .setTextColor(Color.parseColor("#ffffff"))
@@ -144,6 +136,28 @@ public class NewEventActivityForHost extends AppCompatActivity {
             }
         });
 
+        eText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar cldr = Calendar.getInstance();
+                int defaultDay = cldr.get(Calendar.DAY_OF_MONTH);
+                int defaultMonth = cldr.get(Calendar.MONTH);
+                int defaultYear = cldr.get(Calendar.YEAR);
+                // date picker dialog
+                picker = new DatePickerDialog(com.example.calendartest.NewEventActivity.this,
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(android.widget.DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                                eText.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+                                event_year = year;
+                                event_month = monthOfYear + 1;
+                                event_day = dayOfMonth;
+
+                            }
+                        }, defaultYear, defaultMonth, defaultDay);
+                picker.show();
+            }
+        });
     }
 
     @Override
@@ -200,60 +214,10 @@ public class NewEventActivityForHost extends AppCompatActivity {
         // Retrieving the date selected on the calendar from an intent
         Intent intent = getIntent();
 
-        // Reference to collection of events
-        CollectionReference eventsRef = FirebaseFirestore.getInstance()
-                .collection("users").document(currentUser.getUid())
-                .collection("events");
-
-        // Adding the new event into the database
-        Map<String, Object> user = new HashMap<>();
-        user.put("eventName", eventName);
-        user.put("participantEmail", participantEmail_str);
-        user.put("eventLink", eventLink);
-        user.put("startTime", startTime);
-        user.put("endTime", endTime);
-        user.put("currentUserID", currentUser.getUid());
-        user.put("currentUserDisplay", currentUser.getEmail());
-        eventsRef.add(user);
-
-        for(String i : participantEmail){
-
-        FirebaseFirestore.getInstance()
-                .collection("users").whereEqualTo("email", i).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if(task.isSuccessful()){
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-
-                                //participantID.add(document.getId());
-
-                                //DocumentReference participantRef = FirebaseFirestore.getInstance().collection("user").document(participantID);
-                                CollectionReference eventsRef_participant = FirebaseFirestore.getInstance()
-                                        .collection("users").document(document.getId())
-                                        .collection("events");
-
-                                // Adding the new event into the database
-                                Map<String, Object> participant = new HashMap<>();
-                                participant.put("eventName", eventName);
-                                participant.put("participantEmail", participantEmail_str);
-                                participant.put("eventLink", eventLink);
-                                participant.put("startTime", startTime);
-                                participant.put("endTime", endTime);
-                                participant.put("currentUserID", document.getId());
-                                participant.put("currentUserDisplay", i);
-                                eventsRef_participant.add(participant);
-
-                                Event newEvent = new Event(eventName, participantEmail_str, eventLink, startTime, endTime,
-                                        document.getId(), i);
-
-                                Log.d("userid", document.getId() + " => " + document.getData());
-                        }
-                    } else {
-                            Log.d("userid", "Error getting documents: ", task.getException());
-                        }
-                }});
-        };
-
+        FormEvent newEvent = new FormEvent(eventName, participantEmail_str, eventLink, event_year, event_month, event_day, startTime, endTime, currentUser.getUid(), currentUser.getDisplayName());
+        CalendarEvent formattedEvent = EventManager.convertToCalendarEvent(this, newEvent);
+        EventManager.add(formattedEvent);
+        EventManager.pushToFirebase(this, FirebaseAuth.getInstance(), formattedEvent);
 
         /**New event object**/
         //Event newEvent = new Event(eventName, participantEmail, eventLink, startTime, endTime,

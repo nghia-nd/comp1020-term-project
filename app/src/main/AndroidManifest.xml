@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CalendarTest">
         <activity
-            android:name=".NewEventActivityForHost"
+            android:name=".NewEventActivity"
             android:label="@string/new_event"
             android:theme="@style/Theme.AppCompat" />
         <activity android:name=".ui.auth.LoginActivity" />

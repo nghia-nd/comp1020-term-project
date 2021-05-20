@@ -1,7 +1,9 @@
 package com.github.tibolte.agendacalendarview.models;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Event model class containing the information to be displayed on the agenda view.
@@ -79,7 +81,7 @@ public class BaseCalendarEvent implements CalendarEvent {
     /**
      * Participants of the event
      */
-    private LinkedList<String> mParticipants;
+    private List<String> mParticipants;
 
     // region Constructor
 
@@ -125,7 +127,7 @@ public class BaseCalendarEvent implements CalendarEvent {
      * @param endTime The end time of the event.
      * @param allDay Indicates if the event lasts the whole day.
      */
-    public BaseCalendarEvent(String title, String description, String location, int color, Calendar startTime, Calendar endTime, boolean allDay, LinkedList<String> participants) {
+    public BaseCalendarEvent(String title, String description, String location, int color, Calendar startTime, Calendar endTime, boolean allDay, List<String> participants) {
         this.mTitle = title;
         this.mDescription = description;
         this.mLocation = location;
@@ -298,12 +300,12 @@ public class BaseCalendarEvent implements CalendarEvent {
     }
 
     @Override
-    public void setParticipants(LinkedList<String> participants) {
+    public void setParticipants(List<String> participants) {
         mParticipants = participants;
     }
 
     @Override
-    public LinkedList<String> getParticipants() {
+    public List<String> getParticipants() {
         return mParticipants;
     }
 
