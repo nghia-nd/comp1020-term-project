@@ -9,6 +9,7 @@
     tools:context=".NewEventActivityForHost">
 
 
+
     <EditText
         android:id="@+id/new_event_eventName_editText"
         android:layout_width="match_parent"
@@ -31,16 +32,42 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/new_event_eventName_editText"
-        android:layout_marginTop="140dp"
+        android:layout_marginTop="146dp"
         android:hint="Meeting Link"
         android:inputType="textMultiLine" />
+
+    <EditText
+        android:id="@+id/editText1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="280dp"
+        android:ems="10"
+        android:hint="Enter Date" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editText1"
+        android:layout_marginLeft="0dp"
+        android:text="Get Date" />
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button1"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="10dp"
+        android:textStyle="bold"
+        android:textSize="18dp"/>
 
     <Button
         android:id="@+id/new_event_startTime_button"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/new_event_eventName_editText"
-        android:layout_marginTop="236dp"
+        android:layout_marginTop="378dp"
         android:text="Start time" />
 
     <TextView
@@ -48,8 +75,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/new_event_eventName_editText"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="243dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="384dp"
         android:layout_toEndOf="@+id/new_event_startTime_button"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
