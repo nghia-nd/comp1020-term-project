@@ -52,6 +52,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 //Firebase register
                 progressbar.setVisibility(View.VISIBLE);
+                fAuth = FirebaseAuth.getInstance();
                 fAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
