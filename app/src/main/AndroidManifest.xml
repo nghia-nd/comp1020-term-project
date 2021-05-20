@@ -10,10 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CalendarTest">
         <activity
-            android:name=".EditEventActivity"
-            android:label="@string/edit_event"
-            android:theme="@style/Theme.AppCompat" />
-        <activity
             android:name=".NewEventActivityForHost"
             android:label="@string/new_event"
             android:theme="@style/Theme.AppCompat" />
