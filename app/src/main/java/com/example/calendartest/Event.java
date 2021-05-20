@@ -26,7 +26,7 @@ public class Event {
         this.endTime = endTime;
         this.userId = userId;
         this.displayName = displayName;
-        this.priority = 1;
+        //this.priority = 1;
     }
 
 

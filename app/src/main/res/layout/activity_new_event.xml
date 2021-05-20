@@ -32,7 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/new_event_eventName_editText"
         android:layout_marginTop="140dp"
-        android:hint="Event address"
+        android:hint="Meeting Link"
         android:inputType="textMultiLine" />
 
     <Button

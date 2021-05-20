@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -14,14 +15,26 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import net.steamcrafted.lineartimepicker.dialog.LinearTimePickerDialog;
+
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
 
 public class NewEventActivityForHost extends AppCompatActivity {
     private EditText new_event_eventName;
@@ -31,12 +44,10 @@ public class NewEventActivityForHost extends AppCompatActivity {
     private Button select_endTime;
     private TextView new_event_startTime;
     private TextView new_event_endTime;
-    private Spinner new_event_prioritySpinner;
     LinearTimePickerDialog dialogStartTime;
     LinearTimePickerDialog dialogEndTime;
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
-    String setPriority;
     String startTimeInt;
     String endTimeInt;
 
@@ -124,24 +135,6 @@ public class NewEventActivityForHost extends AppCompatActivity {
             }
         });
 
-
-//        new_event_prioritySpinner = findViewById(R.id.new_event_prioritySpinner);
-//        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-//                R.array.priority_array, android.R.layout.simple_spinner_dropdown_item);
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        new_event_prioritySpinner.setAdapter(adapter);
-//
-//        new_event_prioritySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                setPriority = parent.getItemAtPosition(position).toString();
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//
-//            }
-//        });
     }
 
     @Override
@@ -164,7 +157,8 @@ public class NewEventActivityForHost extends AppCompatActivity {
     // Saves the new event into the database
     private void saveEvent() {
         String eventName = new_event_eventName.getText().toString();
-        String participantEmail = new_event_participantEmail.getText().toString();
+        String participantEmail_str = new_event_participantEmail.getText().toString();
+        String[] participantEmail = new_event_participantEmail.getText().toString().split(" ");
         String eventLink = new_event_eventLink.getText().toString();
         String startTime = new_event_startTime.getText().toString();
         String endTime = new_event_endTime.getText().toString();
@@ -196,22 +190,66 @@ public class NewEventActivityForHost extends AppCompatActivity {
 
         // Retrieving the date selected on the calendar from an intent
         Intent intent = getIntent();
-        //int eventYear = intent.getIntExtra("year", 0);
-        //int eventMonth = intent.getIntExtra("month", 0);
-        //int eventDay = intent.getIntExtra("day", 0);
 
         // Reference to collection of events
         CollectionReference eventsRef = FirebaseFirestore.getInstance()
-                .collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .collection("users").document(currentUser.getUid())
                 .collection("events");
 
-        // creating event object for the new event (wrong constructor -> needs changes to parameter)
-        Event newEvent = new Event(eventName, participantEmail, eventLink, startTime, endTime,
-                currentUser.getUid(), currentUser.getDisplayName());
-
-
         // Adding the new event into the database
-        eventsRef.add(newEvent);
+        Map<String, Object> user = new HashMap<>();
+        user.put("eventName", eventName);
+        user.put("participantEmail", participantEmail_str);
+        user.put("eventLink", eventLink);
+        user.put("startTime", startTime);
+        user.put("endTime", endTime);
+        user.put("currentUserID", currentUser.getUid());
+        user.put("currentUserDisplay", currentUser.getEmail());
+        eventsRef.add(user);
+
+        for(String i : participantEmail){
+
+        FirebaseFirestore.getInstance()
+                .collection("users").whereEqualTo("email", i).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()){
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+
+                                //participantID.add(document.getId());
+
+                                //DocumentReference participantRef = FirebaseFirestore.getInstance().collection("user").document(participantID);
+                                CollectionReference eventsRef_participant = FirebaseFirestore.getInstance()
+                                        .collection("users").document(document.getId())
+                                        .collection("events");
+
+                                // Adding the new event into the database
+                                Map<String, Object> participant = new HashMap<>();
+                                participant.put("eventName", eventName);
+                                participant.put("participantEmail", participantEmail_str);
+                                participant.put("eventLink", eventLink);
+                                participant.put("startTime", startTime);
+                                participant.put("endTime", endTime);
+                                participant.put("currentUserID", document.getId());
+                                participant.put("currentUserDisplay", i);
+                                eventsRef_participant.add(participant);
+
+                                Event newEvent = new Event(eventName, participantEmail_str, eventLink, startTime, endTime,
+                                        document.getId(), i);
+
+                                Log.d("userid", document.getId() + " => " + document.getData());
+                        }
+                    } else {
+                            Log.d("userid", "Error getting documents: ", task.getException());
+                        }
+                }});
+        };
+
+
+        /**New event object**/
+        //Event newEvent = new Event(eventName, participantEmail, eventLink, startTime, endTime,
+                //currentUser.getUid(), currentUser.getDisplayName());
+
         Toast.makeText(this, "Event added", Toast.LENGTH_SHORT).show();
         finish();
     }
