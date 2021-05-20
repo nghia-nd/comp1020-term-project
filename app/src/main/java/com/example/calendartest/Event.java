@@ -29,10 +29,6 @@ public class Event {
         //this.priority = 1;
     }
 
-
-
-
-
     public int getPriority() {
         return priority;
     }

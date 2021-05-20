@@ -45,6 +45,7 @@ public class HomeFragment extends Fragment {
         return root;
     }
 
+
     private List<Card> getMeeting() {
         List<Card> meetingList = new ArrayList<Card>();
         LinkedList<String> participants = new LinkedList<>();

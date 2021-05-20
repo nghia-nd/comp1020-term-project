@@ -1,5 +1,6 @@
 package com.example.calendartest.ui.calendar;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.calendartest.Event;
@@ -21,6 +23,11 @@ import com.github.tibolte.agendacalendarview.models.BaseCalendarEvent;
 import com.github.tibolte.agendacalendarview.models.CalendarEvent;
 import com.github.tibolte.agendacalendarview.models.IDayItem;
 import com.github.tibolte.agendacalendarview.models.IWeekItem;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import android.widget.Toast;
 
@@ -85,19 +92,29 @@ public class CalendarFragment extends Fragment {
     }
 
     private void fillList(List<CalendarEvent> eventList) {
-        Calendar startTime2 = Calendar.getInstance();
-        startTime2.add(Calendar.DAY_OF_YEAR, 0);
-        Calendar endTime2 = Calendar.getInstance();
-        endTime2.add(Calendar.DAY_OF_YEAR, 4);
-        BaseCalendarEvent event2 = new BaseCalendarEvent("Visit to Dalvík", "A beautiful small town", "Dalvík",
-                ContextCompat.getColor(this.getContext(), R.color.orange_dark), startTime2, endTime2, false, new LinkedList<String>());
-        eventList.add(event2);
+
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentuser = mAuth.getCurrentUser();
+        String userID = currentuser.getUid();
+
+        CollectionReference docRef = FirebaseFirestore.getInstance()
+                .collection("users")
+                .document(userID).collection("event");
+
+
 
         Calendar startTime1 = fillCalendar(2021, 5, 20, 15,30);
         Calendar endTime1 = fillCalendar(2021, 5, 20, 15, 50);
+
         BaseCalendarEvent event1 = new BaseCalendarEvent("Deadlines", "A beautiful deadline", "Dalvík",
                 ContextCompat.getColor(this.getContext(), R.color.blue_selected), startTime1, endTime1, true, new LinkedList<String>());
         eventList.add(event1);
+
+        Calendar startTime2 = fillCalendar(2021, 5, 20, 15, 50);
+        Calendar endTime2 = fillCalendar(2021, 5, 25, 15, 50);
+        BaseCalendarEvent event2 = new BaseCalendarEvent("Visit to Dalvík", "A beautiful small town", "Dalvík",
+                ContextCompat.getColor(this.getContext(), R.color.orange_dark), startTime2, endTime2, false, new LinkedList<String>());
+        eventList.add(event2);
 
     }
 
@@ -118,10 +135,11 @@ public class CalendarFragment extends Fragment {
             String title = event.getTitle();
             String location = event.getLocation();
             LinkedList<String> participants = event.getParticipants();
-            Date date = event.getDayReference().getDate();
-            int month = date.getMonth();
-            int day = date.getDate();
-            Toast.makeText(getContext(), event.getTitle() + " clicked " + day + "/" + month, Toast.LENGTH_SHORT).show();
+            int month = event.getDayReference().getDate().getMonth();
+            int day = event.getDayReference().getDate().getDate();
+            int hour = event.getStartTime().get(Calendar.HOUR);
+            int min = event.getStartTime().get(Calendar.MINUTE);
+            Toast.makeText(getContext(), event.getTitle() + " clicked " + day + "/" + month + " | " + hour + ":" + min, Toast.LENGTH_SHORT).show();
         }
 
         @Override

@@ -4,37 +4,21 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import net.steamcrafted.lineartimepicker.dialog.LinearTimePickerDialog;
-
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
 
 public class NewEventActivityForHost extends AppCompatActivity {
     private EditText new_event_eventName;
@@ -191,61 +175,10 @@ public class NewEventActivityForHost extends AppCompatActivity {
         // Retrieving the date selected on the calendar from an intent
         Intent intent = getIntent();
 
-        // Reference to collection of events
-        CollectionReference eventsRef = FirebaseFirestore.getInstance()
-                .collection("users").document(currentUser.getUid())
-                .collection("events");
-
-        // Adding the new event into the database
-        Map<String, Object> user = new HashMap<>();
-        user.put("eventName", eventName);
-        user.put("participantEmail", participantEmail_str);
-        user.put("eventLink", eventLink);
-        user.put("startTime", startTime);
-        user.put("endTime", endTime);
-        user.put("currentUserID", currentUser.getUid());
-        user.put("currentUserDisplay", currentUser.getEmail());
-        eventsRef.add(user);
-
-        for(String i : participantEmail){
-
-        FirebaseFirestore.getInstance()
-                .collection("users").whereEqualTo("email", i).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if(task.isSuccessful()){
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-
-                                //participantID.add(document.getId());
-
-                                //DocumentReference participantRef = FirebaseFirestore.getInstance().collection("user").document(participantID);
-                                CollectionReference eventsRef_participant = FirebaseFirestore.getInstance()
-                                        .collection("users").document(document.getId())
-                                        .collection("events");
-
-                                // Adding the new event into the database
-                                Map<String, Object> participant = new HashMap<>();
-                                participant.put("eventName", eventName);
-                                participant.put("participantEmail", participantEmail_str);
-                                participant.put("eventLink", eventLink);
-                                participant.put("startTime", startTime);
-                                participant.put("endTime", endTime);
-                                participant.put("currentUserID", document.getId());
-                                participant.put("currentUserDisplay", i);
-                                eventsRef_participant.add(participant);
-
-                                Event newEvent = new Event(eventName, participantEmail_str, eventLink, startTime, endTime,
-                                        document.getId(), i);
-
-                                Log.d("userid", document.getId() + " => " + document.getData());
-                        }
-                    } else {
-                            Log.d("userid", "Error getting documents: ", task.getException());
-                        }
-                }});
-        };
-
-
+        // Add event to Firebase
+        EventAdder eventAdder = new EventAdder();
+        EventAdder.addToFirebase(currentUser, eventName, participantEmail_str, eventLink, startTime, endTime);
+        EventAdder.refreshAllFragment(getParent());
         /**New event object**/
         //Event newEvent = new Event(eventName, participantEmail, eventLink, startTime, endTime,
                 //currentUser.getUid(), currentUser.getDisplayName());
