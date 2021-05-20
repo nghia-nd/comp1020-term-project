@@ -17,7 +17,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.calendartest.R;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.LinkedList;
 import java.util.List;
+
+import io.perfmark.Link;
 
 public class HomeFragment extends Fragment {
 
@@ -43,8 +47,11 @@ public class HomeFragment extends Fragment {
 
     private List<Card> getMeeting() {
         List<Card> meetingList = new ArrayList<Card>();
-        meetingList.add(new Card("first meeting", "20/10","07:20", "Khoi, Nghia", "https://google.com"));
-        meetingList.add(new Card("second meeting", "08:20", "20/10", "Khoi, Nghia","vinuni-edu-vn.zoom.us/j/93195709386?pwd=R1pRK1l2UE1zRjRwL1NBTnJYdHZUQT09"));
+        LinkedList<String> participants = new LinkedList<>();
+        participants.add("Nghia");
+        participants.add("Khoi");
+        meetingList.add(new Card("first meeting", Calendar.getInstance().getTime(), participants, "https://google.com"));
+        meetingList.add(new Card("second meeting", Calendar.getInstance().getTime(), participants,"vinuni-edu-vn.zoom.us/j/93195709386?pwd=R1pRK1l2UE1zRjRwL1NBTnJYdHZUQT09"));
 
         return meetingList;
     }

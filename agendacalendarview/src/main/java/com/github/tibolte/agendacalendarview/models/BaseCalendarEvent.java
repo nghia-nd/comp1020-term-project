@@ -1,6 +1,7 @@
 package com.github.tibolte.agendacalendarview.models;
 
 import java.util.Calendar;
+import java.util.LinkedList;
 
 /**
  * Event model class containing the information to be displayed on the agenda view.
@@ -75,6 +76,10 @@ public class BaseCalendarEvent implements CalendarEvent {
      * Temperature value returned by the Dark Sky API.
      */
     private double mTemperature;
+    /**
+     * Participants of the event
+     */
+    private LinkedList<String> mParticipants;
 
     // region Constructor
 
@@ -120,7 +125,7 @@ public class BaseCalendarEvent implements CalendarEvent {
      * @param endTime The end time of the event.
      * @param allDay Indicates if the event lasts the whole day.
      */
-    public BaseCalendarEvent(String title, String description, String location, int color, Calendar startTime, Calendar endTime, boolean allDay) {
+    public BaseCalendarEvent(String title, String description, String location, int color, Calendar startTime, Calendar endTime, boolean allDay, LinkedList<String> participants) {
         this.mTitle = title;
         this.mDescription = description;
         this.mLocation = location;
@@ -128,6 +133,7 @@ public class BaseCalendarEvent implements CalendarEvent {
         this.mStartTime = startTime;
         this.mEndTime = endTime;
         this.mAllDay = allDay;
+        this.mParticipants = participants;
     }
 
     public BaseCalendarEvent(BaseCalendarEvent calendarEvent) {
@@ -140,6 +146,7 @@ public class BaseCalendarEvent implements CalendarEvent {
         this.mLocation = calendarEvent.getLocation();
         this.mStartTime = calendarEvent.getStartTime();
         this.mEndTime = calendarEvent.getEndTime();
+        this.mParticipants = calendarEvent.getParticipants();
     }
 
     // endregion
@@ -288,6 +295,16 @@ public class BaseCalendarEvent implements CalendarEvent {
     @Override
     public CalendarEvent copy() {
         return new BaseCalendarEvent(this);
+    }
+
+    @Override
+    public void setParticipants(LinkedList<String> participants) {
+        mParticipants = participants;
+    }
+
+    @Override
+    public LinkedList<String> getParticipants() {
+        return mParticipants;
     }
 
     // endregion

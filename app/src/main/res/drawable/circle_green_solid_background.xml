@@ -2,7 +2,7 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
 
     <solid
-        android:color="@color/selected_day_green" />
+        android:color="@color/blue_selected" />
     <corners
         android:radius="@dimen/day_circle_radius" />
 

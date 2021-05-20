@@ -1,33 +1,26 @@
 package com.example.calendartest.ui.home;
 
+import java.util.Date;
+import java.util.LinkedList;
+
 public class Card {
     private String title;
-    private String startTime;
-    private String day;
-    private String participants;
+    private Date date;
+    private LinkedList<String> participants;
     private String urlOrLocation;
 
-    public Card(String title, String startTime, String day, String participants, String urlOrLocation) {
+    public Card(String title, Date date, LinkedList<String> participants, String urlOrLocation) {
         this.title = title;
-        this.startTime = startTime;
-        this.day = day;
+        this.date =date;
         this.participants = participants;
         this.urlOrLocation = urlOrLocation;
     }
 
-    public String getDay() {
-        return day;
-    }
-
-    public void setDay(String day) {
-        this.day = day;
-    }
-
-    public String getParticipants() {
+    public LinkedList<String> getParticipants() {
         return participants;
     }
 
-    public void setParticipants(String participants) {
+    public void setParticipants(LinkedList<String> participants) {
         this.participants = participants;
     }
 
@@ -39,12 +32,12 @@ public class Card {
         this.title = title;
     }
 
-    public String getStartTime() {
-        return startTime;
+    public Date getDate() {
+        return date;
     }
 
-    public void setStartTime(String startTime) {
-        this.startTime = startTime;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public String getUrlOrLocation() {
