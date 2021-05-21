@@ -57,6 +57,12 @@ public class Card implements Comparable<Card>{
         i = date.getMonth() - o.date.getMonth();
         if (i != 0) return i;
 
-        return date.getDate() - o.date.getDate();
+        i = date.getDate() - o.date.getDate();
+        if (i != 0) return i;
+
+        i = date.getHours() - o.date.getHours();
+        if (i != 0) return i;
+
+        return date.getMinutes() - o.date.getMinutes();
     }
 }

@@ -1,6 +1,7 @@
 package com.example.calendartest.ui.calendar;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.example.calendartest.EventManager;
 import com.example.calendartest.MainActivity;
 import com.example.calendartest.NewEventActivity;
 import com.example.calendartest.R;
+import com.example.calendartest.ui.home.CardAdapter;
 import com.github.tibolte.agendacalendarview.AgendaCalendarView;
 import com.github.tibolte.agendacalendarview.CalendarPickerController;
 import com.github.tibolte.agendacalendarview.models.CalendarEvent;
@@ -28,6 +30,8 @@ import android.widget.Toast;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class CalendarFragment extends Fragment {
@@ -88,7 +92,25 @@ public class CalendarFragment extends Fragment {
                 int day = event.getDayReference().getDate().getDate();
                 int hour = event.getStartTime().get(Calendar.HOUR);
                 int min = event.getStartTime().get(Calendar.MINUTE);
-                Toast.makeText(getContext(), event.getTitle() + " clicked " + day + "/" + month + " | " + hour + ":" + min, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), event.getTitle() + " selected " + event.getStartTime().getTime(), Toast.LENGTH_SHORT).show();
+
+                String url = event.getLocation();
+                if (!url.contains("http") && !url.contains("https")) {
+                    url = "https://" + url;
+                }
+
+                String http = "((http:\\/\\/|https:\\/\\/)?(www.)?(([a-zA-Z0-9-]){2,}\\.){1,4}([a-zA-Z]){2,6}(\\/([a-zA-Z-_\\/\\.0-9#:?=&;,]*)?)?)";
+                Pattern pattern = Pattern.compile(http);
+                Matcher matcher = pattern.matcher(url);
+
+                if(matcher.find()){
+                    Intent web = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                    startActivity(web);
+                }
+                else{
+                    Toast.makeText(getContext(), "Cannot open the link", Toast.LENGTH_SHORT).show();
+                }
+
             }
             else {
                 Intent intent = new Intent(getContext(), NewEventActivity.class);

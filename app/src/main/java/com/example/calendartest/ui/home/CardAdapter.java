@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.URLUtil;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,6 +18,8 @@ import com.example.calendartest.R;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import io.perfmark.Link;
 
@@ -53,11 +56,17 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
     }
 
     public void openLink(String url) {
-        String validUrl = toValidUrl(url);
-        try{
-            Intent web = new Intent(Intent.ACTION_VIEW, Uri.parse(validUrl));
+        String Url = toValidUrl(url);
+
+        String http = "((http:\\/\\/|https:\\/\\/)?(www.)?(([a-zA-Z0-9-]){2,}\\.){1,4}([a-zA-Z]){2,6}(\\/([a-zA-Z-_\\/\\.0-9#:?=&;,]*)?)?)";
+        Pattern pattern = Pattern.compile(http);
+        Matcher matcher = pattern.matcher(Url);
+
+        if(matcher.find()){
+            Intent web = new Intent(Intent.ACTION_VIEW, Uri.parse(Url));
             mContext.startActivity(web);
-        } catch (ActivityNotFoundException e) {
+        }
+        else{
             Toast.makeText(mContext, "Cannot open the link", Toast.LENGTH_SHORT).show();
         }
     }
