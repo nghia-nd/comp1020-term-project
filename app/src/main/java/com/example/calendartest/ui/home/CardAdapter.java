@@ -33,6 +33,10 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         notifyDataSetChanged();
     }
 
+    public void clearData() {
+        mCardList = new LinkedList<>();
+    }
+
     public String toValidUrl(String url) {
         String header = "https";
         if (!url.contains("http") && !url.contains("https")) {

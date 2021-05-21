@@ -19,6 +19,7 @@ import android.widget.FrameLayout;
 import com.github.tibolte.agendacalendarview.agenda.AgendaAdapter;
 import com.github.tibolte.agendacalendarview.agenda.AgendaView;
 import com.github.tibolte.agendacalendarview.calendar.CalendarView;
+import com.github.tibolte.agendacalendarview.calendar.weekslist.WeeksAdapter;
 import com.github.tibolte.agendacalendarview.models.BaseCalendarEvent;
 import com.github.tibolte.agendacalendarview.models.CalendarEvent;
 import com.github.tibolte.agendacalendarview.models.DayItem;
@@ -247,6 +248,10 @@ public class AgendaCalendarView extends FrameLayout implements StickyListHeaders
 
     public void enableFloatingIndicator(boolean enable) {
         mFloatingActionButton.setVisibility(enable ? VISIBLE : GONE);
+    }
+
+    public WeeksAdapter getWeeksAdapter() {
+        return mCalendarView.getWeeksAdapter();
     }
 
     // endregion

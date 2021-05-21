@@ -109,6 +109,11 @@ public class CalendarManager {
     // endregion
 
     // region Public methods
+    public void clearData() {
+        mDays.clear();
+        mWeeks.clear();
+        mEvents.clear();
+    }
 
     public void buildCal(Calendar minDate, Calendar maxDate, Locale locale, IDayItem cleanDay, IWeekItem cleanWeek) {
         if (minDate == null || maxDate == null) {

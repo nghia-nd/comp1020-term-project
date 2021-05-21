@@ -217,7 +217,7 @@ public class NewEventActivity extends AppCompatActivity {
         FormEvent newEvent = new FormEvent(eventName, participantEmail_str, eventLink, event_year, event_month, event_day, startTime, endTime, currentUser.getUid(), currentUser.getDisplayName());
         CalendarEvent formattedEvent = EventManager.convertToCalendarEvent(this, newEvent);
         EventManager.add(formattedEvent);
-        EventManager.pushToFirebase(this, FirebaseAuth.getInstance(), formattedEvent);
+        EventManager.pushToFirebase(FirebaseAuth.getInstance(), formattedEvent);
 
         /**New event object**/
         //Event newEvent = new Event(eventName, participantEmail, eventLink, startTime, endTime,

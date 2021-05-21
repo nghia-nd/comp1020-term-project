@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -14,8 +15,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.calendartest.EventManager;
 import com.example.calendartest.MainActivity;
 import com.example.calendartest.R;
+import com.example.calendartest.SplashActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -40,6 +43,7 @@ public class SignupActivity extends AppCompatActivity {
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     String userID;
+    private static final long SPLASH_TIME_OUT = 2000;
 
 
     @Override
@@ -61,9 +65,20 @@ public class SignupActivity extends AppCompatActivity {
 
         //Check if login or not:
         if (fAuth.getCurrentUser() != null){
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(intent);
-            finish();
+            EventManager.clear();
+            EventManager.pullFirebaseData(fAuth);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
+                }
+            }, SPLASH_TIME_OUT);
+
+            Intent i = new Intent(getApplicationContext(), SplashActivity.class);
+            startActivity(i);
+            Log.d("", "Splash Screen started");
+
         }
 
         //Sign up button

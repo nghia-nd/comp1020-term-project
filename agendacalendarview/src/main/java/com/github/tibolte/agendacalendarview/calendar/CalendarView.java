@@ -271,5 +271,9 @@ public class CalendarView extends LinearLayout {
         return mCurrentListPosition;
     }
 
+    public WeeksAdapter getWeeksAdapter() {
+        return mWeeksAdapter;
+    }
+
     // endregion
 }
