@@ -6,9 +6,12 @@ import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.calendartest.ui.home.Card;
 import com.example.calendartest.ui.home.CardAdapter;
+import com.example.calendartest.ui.home.CardManager;
+import com.github.tibolte.agendacalendarview.AgendaCalendarView;
 import com.github.tibolte.agendacalendarview.models.BaseCalendarEvent;
 import com.github.tibolte.agendacalendarview.models.CalendarEvent;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -33,11 +36,13 @@ public class EventManager {
     public static ArrayList<CalendarEvent> eventList = new ArrayList<>();
     public static ArrayList<Card> cardList = new ArrayList<>();
     public static List<CalendarEvent> newList = new ArrayList<>();
+    private static LinkedList<String> firebaseEventID = new LinkedList<>();
+    public static Task<QuerySnapshot> querySnapshotTask;
 
     private static Calendar fillCalendar(int year, int month, int day, int hour, int min) {
         Calendar mCalendar = Calendar.getInstance();
         mCalendar.set(Calendar.YEAR, year);
-        mCalendar.set(Calendar.MONTH, month - 1);
+        mCalendar.set(Calendar.MONTH, month);
         mCalendar.set(Calendar.DAY_OF_MONTH, day);
         mCalendar.set(Calendar.HOUR_OF_DAY, hour);
         mCalendar.set(Calendar.MINUTE, min);
@@ -75,7 +80,41 @@ public class EventManager {
         return new Card(title, date, participants, address);
     }
 
-    public static List<CalendarEvent> pullFirebaseData(Context context, FirebaseAuth mAuth) {
+    public static List<CalendarEvent> fillEventList(Context context, Task<QuerySnapshot> task) {
+        for(QueryDocumentSnapshot document : task.getResult()){
+            if (!firebaseEventID.contains(document.getId())) {
+                firebaseEventID.add(document.getId());
+
+                String eventName = document.getString("eventName");
+                String eventLink = document.getString("eventLink");
+                String startTime = document.getString("startTime");
+                String endTime = document.getString("endTime");
+                String[] participants = document.getString("participantEmail").split(" ");
+                int year = Math.toIntExact(document.getLong("year"));
+                int month = Math.toIntExact(document.getLong("month"));
+                int day = Math.toIntExact(document.getLong("day"));
+
+                int startHour = Integer.parseInt(startTime.split(":")[0]);
+                int startMin = Integer.parseInt(startTime.split(":")[1]);
+                int endHour = Integer.parseInt(endTime.split(":")[0]);
+                int endMin = Integer.parseInt(endTime.split(":")[01]);
+
+                Calendar start = fillCalendar(year, month, day, startHour, startMin);
+                Calendar end = fillCalendar(year, month, day, endHour, endMin);
+
+                BaseCalendarEvent event = new BaseCalendarEvent(eventName, "", eventLink, ContextCompat.getColor(context, R.color.blue_selected), start, end, false, Arrays.asList(participants));
+                Log.d("Event Manager: ", eventName);
+                newList.add(event);
+            }
+        }
+        return newList;
+    }
+
+    interface CallBack {
+        void onExist(Context context, Task<QuerySnapshot> task);
+    }
+
+    public static List<CalendarEvent> pullFirebaseData(Context context, FirebaseAuth mAuth, CallBack callBack){         //, RecyclerView.Adapter adapter) {
         FirebaseUser currentuser = mAuth.getCurrentUser();
         String userID = currentuser.getUid();
         List<String> list_id = new ArrayList<String>();
@@ -88,36 +127,14 @@ public class EventManager {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful() && !task.getResult().isEmpty()){
-                    for(QueryDocumentSnapshot document : task.getResult()){
-                        //list_id.add(document.getId());
-
-                        String eventName = document.getString("eventName");
-                        String eventLink = document.getString("eventLink");
-                        String startTime = document.getString("startTime");
-                        String endTime = document.getString("endTime");
-                        String[] participants = document.getString("participantEmail").split(" ");
-                        int year = Math.toIntExact(document.getLong("year"));
-                        int month =  Math.toIntExact(document.getLong("month"));
-                        int day =  Math.toIntExact(document.getLong("day"));
-
-                        int startHour = Integer.parseInt(startTime.split(":")[0]);
-                        int startMin = Integer.parseInt(startTime.split(":")[1]);
-                        int endHour = Integer.parseInt(endTime.split(":")[0]);
-                        int endMin = Integer.parseInt(endTime.split(":")[01]);
-
-                        Calendar start = fillCalendar(year, month, day, startHour, startMin);
-                        Calendar end = fillCalendar(year, month, day, endHour, endMin);
-
-                        BaseCalendarEvent event = new BaseCalendarEvent(eventName, "", eventLink, ContextCompat.getColor(context, R.color.blue_selected), start, end, false, Arrays.asList(participants));
-                        Log.d("Event Manager: ", eventName);
-                        newList.add(event);
-                    }
+                    callBack.onExist(context, task);
                 }
                 else {
                     Log.d("Event Manager: ", "Cannot retrieve data");
                 }
             }
         });
+
         return newList;
     }
 

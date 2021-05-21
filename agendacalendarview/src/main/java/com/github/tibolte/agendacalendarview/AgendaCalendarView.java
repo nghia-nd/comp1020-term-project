@@ -19,6 +19,7 @@ import android.widget.FrameLayout;
 import com.github.tibolte.agendacalendarview.agenda.AgendaAdapter;
 import com.github.tibolte.agendacalendarview.agenda.AgendaView;
 import com.github.tibolte.agendacalendarview.calendar.CalendarView;
+import com.github.tibolte.agendacalendarview.calendar.weekslist.WeeksAdapter;
 import com.github.tibolte.agendacalendarview.models.BaseCalendarEvent;
 import com.github.tibolte.agendacalendarview.models.CalendarEvent;
 import com.github.tibolte.agendacalendarview.models.DayItem;
@@ -114,8 +115,8 @@ public class AgendaCalendarView extends FrameLayout implements StickyListHeaders
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        mCalendarView = (CalendarView) findViewById(R.id.calendar_view);
-        mAgendaView = (AgendaView) findViewById(R.id.agenda_view);
+        mCalendarView = findViewById(R.id.calendar_view);
+        mAgendaView = findViewById(R.id.agenda_view);
         mFloatingActionButton = (FloatingActionButton) findViewById(R.id.floating_action_button);
         ColorStateList csl = new ColorStateList(new int[][]{new int[0]}, new int[]{mFabColor});
         mFloatingActionButton.setBackgroundTintList(csl);
@@ -249,5 +250,8 @@ public class AgendaCalendarView extends FrameLayout implements StickyListHeaders
         mFloatingActionButton.setVisibility(enable ? VISIBLE : GONE);
     }
 
+    public WeeksAdapter getWeeksAdapter() {
+        return mCalendarView.getWeeksAdapter();
+    }
     // endregion
 }
