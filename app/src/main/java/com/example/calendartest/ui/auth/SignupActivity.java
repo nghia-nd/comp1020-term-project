@@ -43,7 +43,7 @@ public class SignupActivity extends AppCompatActivity {
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     String userID;
-    private static final long SPLASH_TIME_OUT = 2000;
+    private static final long SPLASH_TIME_OUT = 3000;
 
 
     @Override
@@ -78,6 +78,7 @@ public class SignupActivity extends AppCompatActivity {
             Intent i = new Intent(getApplicationContext(), SplashActivity.class);
             startActivity(i);
             Log.d("", "Splash Screen started");
+            //finish();
 
         }
 

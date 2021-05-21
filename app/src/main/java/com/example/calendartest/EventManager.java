@@ -1,6 +1,7 @@
 package com.example.calendartest;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 
@@ -24,6 +25,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -47,10 +49,41 @@ public class EventManager {
         return mCalendar;
     }
 
+    public static class cardComparator implements Comparator<Card> {
+
+        @Override
+        public int compare(Card o1, Card o2) {
+            int i = o1.getDate().getYear() - o2.getDate().getYear();
+            if (i != 0) return i;
+
+            i = o1.getDate().getMonth() - o2.getDate().getMonth();
+            if (i != 0) return i;
+
+            i = o1.getDate().getDate() - o2.getDate().getDate();
+            if (i != 0) return i;
+
+            i = o1.getDate().getHours() - o2.getDate().getHours();
+            if (i != 0) return i;
+
+            return o1.getDate().getMinutes() - o2.getDate().getMinutes();
+        }
+    }
+
     public static void add(CalendarEvent event) {
-        eventList.add(event);
         Card cardEvent = EventManager.convertToCard(event);
-        //cardList.add();
+        Card today = new Card("", Calendar.getInstance().getTime(), new LinkedList<>(), "");
+
+        if(cardEvent.compareTo(today) >=0){
+            cardList.add(cardEvent);
+            cardList.sort(new cardComparator());
+            eventList.add(event);
+        }
+        else{
+            BaseCalendarEvent baseCalendarEvent = (BaseCalendarEvent) event;
+            baseCalendarEvent.setColor(Color.parseColor("#FF5722"));
+            eventList.add(event);
+        }
+
     }
 
     public static void clear() {
@@ -97,7 +130,7 @@ public class EventManager {
                     String endTime = document.getString("endTime");
                     String[] participants = document.getString("participantEmail").split(" ");
                     int year = Math.toIntExact(document.getLong("year"));
-                    int month = Math.toIntExact(document.getLong("month"));
+                    int month = Math.toIntExact(document.getLong("month")) + 1;
                     int day = Math.toIntExact(document.getLong("day"));
 
                     int startHour = Integer.parseInt(startTime.split(":")[0]);
