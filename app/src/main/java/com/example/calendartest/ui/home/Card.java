@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Card {
+public class Card implements Comparable<Card>{
     private String title;
     private Date date;
     private List<String> participants;
@@ -47,5 +47,16 @@ public class Card {
 
     public void setUrlOrLocation(String urlOrLocation) {
         this.urlOrLocation = urlOrLocation;
+    }
+
+    @Override
+    public int compareTo(Card o) {
+        int i = date.getYear() - o.date.getYear();
+        if (i != 0) return i;
+
+        i = date.getMonth() - o.date.getMonth();
+        if (i != 0) return i;
+
+        return date.getDate() - o.date.getDate();
     }
 }

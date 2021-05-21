@@ -2,6 +2,8 @@ package com.example.calendartest;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -42,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         parent = findViewById(R.id.parent);
         container = findViewById(R.id.container);
 
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,10 +52,12 @@ public class MainActivity extends AppCompatActivity {
                 //showSnackbar();
                 Intent intent = new Intent(MainActivity.this, NewEventActivity.class);
                 startActivity(intent);
+                //finish();
 
             }
         });
 
+        EventManager.fillEventList(this);
 
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
@@ -66,9 +71,9 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
 
 
-        for (CalendarEvent i : EventManager.pullFirebaseData(this, FirebaseAuth.getInstance())) {
-            EventManager.add(i);
-        }
+//        for (CalendarEvent i : EventManager.pullFirebaseData(this, FirebaseAuth.getInstance())) {
+//            EventManager.add(i);
+//        }
     }
 
     private void showSnackbar(){

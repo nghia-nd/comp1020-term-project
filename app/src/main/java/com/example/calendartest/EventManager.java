@@ -6,6 +6,7 @@ import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.calendartest.ui.home.Card;
 import com.example.calendartest.ui.home.CardAdapter;
@@ -33,6 +34,8 @@ public class EventManager {
     public static ArrayList<CalendarEvent> eventList = new ArrayList<>();
     public static ArrayList<Card> cardList = new ArrayList<>();
     public static List<CalendarEvent> newList = new ArrayList<>();
+    private static LinkedList<String> firebaseEventID = new LinkedList<>();
+    private static Task<QuerySnapshot> querySnapshotTask;
 
     private static Calendar fillCalendar(int year, int month, int day, int hour, int min) {
         Calendar mCalendar = Calendar.getInstance();
@@ -46,7 +49,15 @@ public class EventManager {
 
     public static void add(CalendarEvent event) {
         eventList.add(event);
-        cardList.add(EventManager.convertToCard(event));
+        Card cardEvent = EventManager.convertToCard(event);
+        //cardList.add();
+    }
+
+    public static void clear() {
+        eventList.clear();
+        cardList.clear();
+        firebaseEventID.clear();
+        newList.clear();
     }
 
     public static CalendarEvent convertToCalendarEvent(Context context, FormEvent formEvent) {
@@ -75,7 +86,41 @@ public class EventManager {
         return new Card(title, date, participants, address);
     }
 
-    public static List<CalendarEvent> pullFirebaseData(Context context, FirebaseAuth mAuth) {
+    public static void fillEventList(Context context) {
+        if (querySnapshotTask != null) {
+            for (QueryDocumentSnapshot document : querySnapshotTask.getResult()) {
+                if (!firebaseEventID.contains(document.getString("eventName"))) {
+                    firebaseEventID.add(document.getString("eventName"));
+                    String eventName = document.getString("eventName");
+                    String eventLink = document.getString("eventLink");
+                    String startTime = document.getString("startTime");
+                    String endTime = document.getString("endTime");
+                    String[] participants = document.getString("participantEmail").split(" ");
+                    int year = Math.toIntExact(document.getLong("year"));
+                    int month = Math.toIntExact(document.getLong("month"));
+                    int day = Math.toIntExact(document.getLong("day"));
+
+                    int startHour = Integer.parseInt(startTime.split(":")[0]);
+                    int startMin = Integer.parseInt(startTime.split(":")[1]);
+                    int endHour = Integer.parseInt(endTime.split(":")[0]);
+                    int endMin = Integer.parseInt(endTime.split(":")[01]);
+
+                    Calendar start = fillCalendar(year, month, day, startHour, startMin);
+                    Calendar end = fillCalendar(year, month, day, endHour, endMin);
+
+                    BaseCalendarEvent event = new BaseCalendarEvent(eventName, "", eventLink, ContextCompat.getColor(context, R.color.blue_selected), start, end, false, Arrays.asList(participants));
+                    Log.d("Event Manager: ", eventName);
+                    newList.add(event);
+                }
+            }
+        }
+
+        for (CalendarEvent i : newList) {
+            EventManager.add(i);
+        }
+    }
+
+    public static void pullFirebaseData(FirebaseAuth mAuth) {
         FirebaseUser currentuser = mAuth.getCurrentUser();
         String userID = currentuser.getUid();
         List<String> list_id = new ArrayList<String>();
@@ -87,41 +132,18 @@ public class EventManager {
         collectionRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful() && !task.getResult().isEmpty()){
-                    for(QueryDocumentSnapshot document : task.getResult()){
-                        //list_id.add(document.getId());
-
-                        String eventName = document.getString("eventName");
-                        String eventLink = document.getString("eventLink");
-                        String startTime = document.getString("startTime");
-                        String endTime = document.getString("endTime");
-                        String[] participants = document.getString("participantEmail").split(" ");
-                        int year = Math.toIntExact(document.getLong("year"));
-                        int month =  Math.toIntExact(document.getLong("month"));
-                        int day =  Math.toIntExact(document.getLong("day"));
-
-                        int startHour = Integer.parseInt(startTime.split(":")[0]);
-                        int startMin = Integer.parseInt(startTime.split(":")[1]);
-                        int endHour = Integer.parseInt(endTime.split(":")[0]);
-                        int endMin = Integer.parseInt(endTime.split(":")[01]);
-
-                        Calendar start = fillCalendar(year, month, day, startHour, startMin);
-                        Calendar end = fillCalendar(year, month, day, endHour, endMin);
-
-                        BaseCalendarEvent event = new BaseCalendarEvent(eventName, "", eventLink, ContextCompat.getColor(context, R.color.blue_selected), start, end, false, Arrays.asList(participants));
-                        Log.d("Event Manager: ", eventName);
-                        newList.add(event);
-                    }
+                if(task.isSuccessful()){
+                    Log.d("Event Manager: ", "Succesfully retrieved data");
+                    querySnapshotTask = task;
                 }
                 else {
                     Log.d("Event Manager: ", "Cannot retrieve data");
                 }
             }
         });
-        return newList;
     }
 
-    public static void pushToFirebase(Context context, FirebaseAuth mAuth, CalendarEvent event) {
+    public static void pushToFirebase(FirebaseAuth mAuth, CalendarEvent event) {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         String eventName = event.getTitle();
         List<String> participants = new ArrayList<>(event.getParticipants());

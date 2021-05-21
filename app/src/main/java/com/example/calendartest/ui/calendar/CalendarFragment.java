@@ -1,5 +1,6 @@
 package com.example.calendartest.ui.calendar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.calendartest.EventManager;
+import com.example.calendartest.MainActivity;
+import com.example.calendartest.NewEventActivity;
 import com.example.calendartest.R;
 import com.github.tibolte.agendacalendarview.AgendaCalendarView;
 import com.github.tibolte.agendacalendarview.CalendarPickerController;
@@ -76,15 +79,21 @@ public class CalendarFragment extends Fragment {
 
         @Override
         public void onEventSelected(CalendarEvent event) {
-            mCalendarEvent = event;
-            String title = event.getTitle();
-            String location = event.getLocation();
-            List<String> participants = event.getParticipants();
-            int month = event.getDayReference().getDate().getMonth();
-            int day = event.getDayReference().getDate().getDate();
-            int hour = event.getStartTime().get(Calendar.HOUR);
-            int min = event.getStartTime().get(Calendar.MINUTE);
-            Toast.makeText(getContext(), event.getTitle() + " clicked " + day + "/" + month + " | " + hour + ":" + min, Toast.LENGTH_SHORT).show();
+            if (event != null) {
+                mCalendarEvent = event;
+                String title = event.getTitle();
+                String location = event.getLocation();
+                List<String> participants = event.getParticipants();
+                int month = event.getDayReference().getDate().getMonth();
+                int day = event.getDayReference().getDate().getDate();
+                int hour = event.getStartTime().get(Calendar.HOUR);
+                int min = event.getStartTime().get(Calendar.MINUTE);
+                Toast.makeText(getContext(), event.getTitle() + " clicked " + day + "/" + month + " | " + hour + ":" + min, Toast.LENGTH_SHORT).show();
+            }
+            else {
+                Intent intent = new Intent(getContext(), NewEventActivity.class);
+                startActivity(intent);
+            }
         }
 
         @Override
