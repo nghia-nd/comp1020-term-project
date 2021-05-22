@@ -227,14 +227,14 @@ public class EventManager {
 
                             // Adding the new event into the database
                             Map<String, Object> participant = new HashMap<>();
-                            user.put("eventName", eventName);
-                            user.put("participantEmail", finalParticipantString + " " + currentUser.getEmail());
-                            user.put("eventLink", address);
-                            user.put("year", startTime.get(Calendar.YEAR));
-                            user.put("month", startTime.get(Calendar.MONTH));
-                            user.put("day", startTime.get(Calendar.DAY_OF_MONTH));
-                            user.put("startTime", startTime.get(Calendar.HOUR_OF_DAY) + ":" + startTime.get(Calendar.MINUTE));
-                            user.put("endTime", endTime.get(Calendar.HOUR_OF_DAY) + ":" + endTime.get(Calendar.MINUTE));
+                            participant.put("eventName", eventName);
+                            participant.put("participantEmail", finalParticipantString + " " + currentUser.getEmail());
+                            participant.put("eventLink", address);
+                            participant.put("year", startTime.get(Calendar.YEAR));
+                            participant.put("month", startTime.get(Calendar.MONTH));
+                            participant.put("day", startTime.get(Calendar.DAY_OF_MONTH));
+                            participant.put("startTime", startTime.get(Calendar.HOUR_OF_DAY) + ":" + startTime.get(Calendar.MINUTE));
+                            participant.put("endTime", endTime.get(Calendar.HOUR_OF_DAY) + ":" + endTime.get(Calendar.MINUTE));
                             participant.put("currentUserID", document.getId());
                             participant.put("currentUserDisplay", i);
                             eventsRef_participant.add(participant);
