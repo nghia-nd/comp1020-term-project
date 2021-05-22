@@ -119,36 +119,38 @@ public class EventManager {
     }
 
     public static void fillEventList(Context context) {
-        if (querySnapshotTask.getResult() != null) {
-            for (QueryDocumentSnapshot document : querySnapshotTask.getResult()) {
-                if (!firebaseEventID.contains(document.getString("eventName"))) {
-                    firebaseEventID.add(document.getString("eventName"));
-                    String eventName = document.getString("eventName");
-                    String eventLink = document.getString("eventLink");
-                    String startTime = document.getString("startTime");
-                    String endTime = document.getString("endTime");
-                    String[] participants = document.getString("participantEmail").split(" ");
-                    int year = Math.toIntExact(document.getLong("year"));
-                    int month = Math.toIntExact(document.getLong("month")) + 1;
-                    int day = Math.toIntExact(document.getLong("day"));
+        if (querySnapshotTask != null) {
+            if (querySnapshotTask.getResult() != null) {
+                for (QueryDocumentSnapshot document : querySnapshotTask.getResult()) {
+                    if (!firebaseEventID.contains(document.getString("eventName"))) {
+                        firebaseEventID.add(document.getString("eventName"));
+                        String eventName = document.getString("eventName");
+                        String eventLink = document.getString("eventLink");
+                        String startTime = document.getString("startTime");
+                        String endTime = document.getString("endTime");
+                        String[] participants = document.getString("participantEmail").split(" ");
+                        int year = Math.toIntExact(document.getLong("year"));
+                        int month = Math.toIntExact(document.getLong("month")) + 1;
+                        int day = Math.toIntExact(document.getLong("day"));
 
-                    int startHour = Integer.parseInt(startTime.split(":")[0]);
-                    int startMin = Integer.parseInt(startTime.split(":")[1]);
-                    int endHour = Integer.parseInt(endTime.split(":")[0]);
-                    int endMin = Integer.parseInt(endTime.split(":")[01]);
+                        int startHour = Integer.parseInt(startTime.split(":")[0]);
+                        int startMin = Integer.parseInt(startTime.split(":")[1]);
+                        int endHour = Integer.parseInt(endTime.split(":")[0]);
+                        int endMin = Integer.parseInt(endTime.split(":")[01]);
 
-                    Calendar start = fillCalendar(year, month, day, startHour, startMin);
-                    Calendar end = fillCalendar(year, month, day, endHour, endMin);
+                        Calendar start = fillCalendar(year, month, day, startHour, startMin);
+                        Calendar end = fillCalendar(year, month, day, endHour, endMin);
 
-                    BaseCalendarEvent event = new BaseCalendarEvent(eventName, "", eventLink, ContextCompat.getColor(context, R.color.blue_selected), start, end, false, Arrays.asList(participants));
-                    Log.d("Event Manager: ", eventName);
-                    newList.add(event);
+                        BaseCalendarEvent event = new BaseCalendarEvent(eventName, "", eventLink, ContextCompat.getColor(context, R.color.blue_selected), start, end, false, Arrays.asList(participants));
+                        Log.d("Event Manager: ", eventName);
+                        newList.add(event);
+                    }
                 }
             }
-        }
 
-        for (CalendarEvent i : newList) {
-            EventManager.add(i);
+            for (CalendarEvent i : newList) {
+                EventManager.add(i);
+            }
         }
     }
 
