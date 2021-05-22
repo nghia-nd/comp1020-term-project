@@ -2,11 +2,8 @@ package com.example.calendartest;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -17,14 +14,11 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.github.tibolte.agendacalendarview.models.CalendarEvent;
+import com.example.calendartest.event.EventManager;
+import com.example.calendartest.event.NewEventActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.auth.FirebaseAuth;
-
-import java.text.DateFormat;
-import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
     // Define the variable of CalendarView type

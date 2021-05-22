@@ -1,4 +1,4 @@
-package com.example.calendartest.ui.calendar;
+package com.example.calendartest.calendar;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -14,16 +14,13 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.calendartest.EventManager;
-import com.example.calendartest.MainActivity;
-import com.example.calendartest.NewEventActivity;
+import com.example.calendartest.event.EventManager;
+import com.example.calendartest.event.NewEventActivity;
 import com.example.calendartest.R;
-import com.example.calendartest.ui.home.CardAdapter;
 import com.github.tibolte.agendacalendarview.AgendaCalendarView;
 import com.github.tibolte.agendacalendarview.CalendarPickerController;
 import com.github.tibolte.agendacalendarview.models.CalendarEvent;
 import com.github.tibolte.agendacalendarview.models.IDayItem;
-import com.google.firebase.auth.FirebaseAuth;
 
 import android.widget.Toast;
 

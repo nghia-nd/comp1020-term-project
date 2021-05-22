@@ -1,9 +1,8 @@
-package com.example.calendartest.ui.auth;
+package com.example.calendartest.auth;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,7 +14,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.calendartest.EventManager;
+import com.example.calendartest.event.EventManager;
 import com.example.calendartest.MainActivity;
 import com.example.calendartest.R;
 import com.example.calendartest.SplashActivity;

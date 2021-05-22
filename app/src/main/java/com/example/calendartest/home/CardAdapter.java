@@ -1,13 +1,11 @@
-package com.example.calendartest.ui.home;
+package com.example.calendartest.home;
 
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.URLUtil;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,8 +18,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import io.perfmark.Link;
 
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder>{
     private Context mContext;

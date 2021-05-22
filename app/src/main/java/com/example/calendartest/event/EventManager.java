@@ -1,16 +1,14 @@
-package com.example.calendartest;
+package com.example.calendartest.event;
 
 import android.content.Context;
 import android.graphics.Color;
 import android.util.Log;
-import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.calendartest.ui.home.Card;
-import com.example.calendartest.ui.home.CardAdapter;
+import com.example.calendartest.R;
+import com.example.calendartest.home.Card;
 import com.github.tibolte.agendacalendarview.models.BaseCalendarEvent;
 import com.github.tibolte.agendacalendarview.models.CalendarEvent;
 import com.google.android.gms.tasks.OnCompleteListener;

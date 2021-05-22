@@ -1,31 +1,18 @@
-package com.example.calendartest.ui.home;
+package com.example.calendartest.home;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.calendartest.EventManager;
+import com.example.calendartest.event.EventManager;
 import com.example.calendartest.R;
-import com.github.tibolte.agendacalendarview.models.CalendarEvent;
-import com.google.firebase.auth.FirebaseAuth;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.LinkedList;
 import java.util.List;
-
-import io.perfmark.Link;
 
 public class HomeFragment extends Fragment {
 

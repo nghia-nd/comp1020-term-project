@@ -1,4 +1,4 @@
-package com.example.calendartest.ui.auth;
+package com.example.calendartest.auth;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,7 +15,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.calendartest.EventManager;
+import com.example.calendartest.event.EventManager;
 import com.example.calendartest.MainActivity;
 import com.example.calendartest.R;
 import com.example.calendartest.SplashActivity;
@@ -138,11 +138,6 @@ public class SignupActivity extends AppCompatActivity {
                     }
                 });
 
-                //UserHelperClass userHelperClass = new UserHelperClass(firstname, lastname, phone, email, password);
-                //reference.child(phone).setValue(userHelperClass);
-
-                //Intent intent = new Intent(SignupActivity.this, MainActivity.class);
-                //startActivity(intent);
             }
         });
 

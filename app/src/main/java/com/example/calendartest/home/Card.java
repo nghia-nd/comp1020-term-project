@@ -1,7 +1,6 @@
-package com.example.calendartest.ui.home;
+package com.example.calendartest.home;
 
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 
 public class Card implements Comparable<Card>{

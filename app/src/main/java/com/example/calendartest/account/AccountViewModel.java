@@ -1,4 +1,4 @@
-package com.example.calendartest.ui.account;
+package com.example.calendartest.account;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

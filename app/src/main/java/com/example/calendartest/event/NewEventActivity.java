@@ -1,4 +1,4 @@
-package com.example.calendartest;
+package com.example.calendartest.event;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,7 +16,7 @@ import android.text.InputType;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.github.tibolte.agendacalendarview.models.BaseCalendarEvent;
+import com.example.calendartest.R;
 import com.github.tibolte.agendacalendarview.models.CalendarEvent;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -144,7 +144,7 @@ public class NewEventActivity extends AppCompatActivity {
                 int defaultMonth = cldr.get(Calendar.MONTH);
                 int defaultYear = cldr.get(Calendar.YEAR);
                 // date picker dialog
-                picker = new DatePickerDialog(com.example.calendartest.NewEventActivity.this,
+                picker = new DatePickerDialog(NewEventActivity.this,
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(android.widget.DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -225,5 +225,45 @@ public class NewEventActivity extends AppCompatActivity {
 
         Toast.makeText(this, "Event added", Toast.LENGTH_SHORT).show();
         finish();
+    }
+
+    public static class DatePicker extends AppCompatActivity {
+        DatePickerDialog picker;
+        EditText eText;
+        Button btnGet;
+        TextView tvw;
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_main);
+            tvw= findViewById(R.id.textView1);
+            eText= findViewById(R.id.editText1);
+            eText.setInputType(InputType.TYPE_NULL);
+            eText.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final Calendar cldr = Calendar.getInstance();
+                    int day = cldr.get(Calendar.DAY_OF_MONTH);
+                    int month = cldr.get(Calendar.MONTH);
+                    int year = cldr.get(Calendar.YEAR);
+                    // date picker dialog
+                    picker = new DatePickerDialog(DatePicker.this,
+                            new DatePickerDialog.OnDateSetListener() {
+                                @Override
+                                public void onDateSet(android.widget.DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                                    eText.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+                                }
+                            }, year, month, day);
+                    picker.show();
+                }
+            });
+            btnGet= findViewById(R.id.button1);
+            btnGet.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    tvw.setText("Selected Date: "+ eText.getText());
+                }
+            });
+        }
     }
 }

@@ -1,16 +1,16 @@
-package com.example.calendartest.ui.calendar;
+package com.example.calendartest.home;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class CalendarViewModel extends ViewModel {
+public class HomeViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public CalendarViewModel() {
+    public HomeViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is calendar fragment");
+        mText.setValue("This is home fragment");
     }
 
     public LiveData<String> getText() {

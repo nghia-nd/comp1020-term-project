@@ -1,4 +1,4 @@
-package com.example.calendartest.ui.home;
+package com.example.calendartest.home;
 
 import android.app.Activity;
 import android.content.Context;
@@ -7,7 +7,7 @@ import android.view.View;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.calendartest.EventManager;
+import com.example.calendartest.event.EventManager;
 import com.example.calendartest.R;
 
 import java.util.List;

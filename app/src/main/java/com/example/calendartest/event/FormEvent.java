@@ -1,4 +1,4 @@
-package com.example.calendartest;
+package com.example.calendartest.event;
 
 import java.util.Calendar;
 import java.util.Date;
