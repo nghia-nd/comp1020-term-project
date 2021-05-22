@@ -46,6 +46,7 @@ public class EventManager {
         mCalendar.set(Calendar.DAY_OF_MONTH, day);
         mCalendar.set(Calendar.HOUR_OF_DAY, hour);
         mCalendar.set(Calendar.MINUTE, min);
+        mCalendar.set(Calendar.SECOND, 0);
         return mCalendar;
     }
 
@@ -120,7 +121,7 @@ public class EventManager {
     }
 
     public static void fillEventList(Context context) {
-        if (querySnapshotTask != null) {
+        if (querySnapshotTask.getResult() != null) {
             for (QueryDocumentSnapshot document : querySnapshotTask.getResult()) {
                 if (!firebaseEventID.contains(document.getString("eventName"))) {
                     firebaseEventID.add(document.getString("eventName"));

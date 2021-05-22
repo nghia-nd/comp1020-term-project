@@ -72,7 +72,7 @@ public class AccountFragment extends Fragment {
                         String email_fb = task.getResult().getString("email");
                         fname.setText("First name: " + fname_fb);
                         lname.setText("Last name: " + lname_fb);
-                        email.setText("Email " + email_fb);
+                        email.setText("Email: " + email_fb);
                     }
                 }
 

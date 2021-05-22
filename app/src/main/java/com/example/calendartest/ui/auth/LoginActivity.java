@@ -29,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText logemail, logpass;
     ProgressBar progressbar;
     FirebaseAuth fAuth;
-    private static final long SPLASH_TIME_OUT = 2000;
+    private static final long SPLASH_TIME_OUT = 3000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
